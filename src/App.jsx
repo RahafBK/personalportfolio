@@ -160,7 +160,7 @@ const projects = [
   },
   {
     title: "AI-Driven Cybersecurity Research",
-    period: "Prince Sultan University · 2022–2023",
+    period: "Prince Sultan University ·2022–2023",
     tags: ["Cybersecurity", "Threat Detection", "ML"],
     description:
       "Conducted applied research on risk mitigation and AI-powered defense mechanisms to enhance threat detection.",
@@ -506,12 +506,19 @@ export default function PortfolioSite() {
           transition={{ duration: 0.25 }}
         >
           <Card className="h-full rounded-2xl">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <span>{p.title}</span>
-                <Badge variant="outline">{p.period}</Badge>
-              </CardTitle>
-            </CardHeader>
+        <CardHeader>
+  <CardTitle className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+    <span className="whitespace-normal break-words">{p.title}</span>
+    <Badge
+      variant="outline"
+      className="whitespace-normal break-words text-center leading-tight px-2 py-1"
+      style={{ maxWidth: '8rem', whiteSpace: 'normal', lineHeight: '1.2' }}
+    >
+      {p.period}
+    </Badge>
+  </CardTitle>
+</CardHeader>
+
             <CardContent>
               <p className="text-sm text-slate-600 dark:text-slate-300">{p.description}</p>
               <div className="mt-3 flex flex-wrap gap-2">
