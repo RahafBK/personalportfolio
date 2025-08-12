@@ -415,16 +415,17 @@ export default function PortfolioSite() {
             <Section id="thesis" icon={Microscope} title="Thesis & Dissertation">
               <div className="grid gap-6 md:grid-cols-2">
                 {thesis.map((t, i) => (
-                  <Card key={i} className="rounded-2xl">
+                  <Card key={i} className="rounded-2xl h-full flex flex-col">
                     <CardHeader>
                       <CardTitle>{t.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-slate-600 dark:text-slate-300">{t.summary}</p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {t.methods.map((m) => <Tag key={m}>{m}</Tag>)}
-                      </div>
-                      <div className="mt-4 flex flex-wrap gap-3">
+                        </CardHeader>
+                          <CardContent className="flex flex-col gap-3 grow">
+                             <p className="text-sm text-slate-600 dark:text-slate-300">{t.summary}</p>
+                               <div className="mt-1 flex flex-wrap gap-2">
+                                 {t.methods.map((m) => <Tag key={m}>{m}</Tag>)}
+                                   </div>
+
+                      <div className="mt-auto flex flex-wrap gap-3">
                         {t.links.map((l) => (
                           <a key={l.label} href={l.href} className="inline-flex items-center gap-2 text-sm hover:underline" target="_blank" rel="noreferrer">
                             <ExternalLink className="h-4 w-4" /> {l.label}
@@ -433,10 +434,10 @@ export default function PortfolioSite() {
                       </div>
                     </CardContent>
                   </Card>
-                ))}
-              </div>
-            </Section>
-          </div>
+                                  ))}
+                                </div>
+                              </Section>
+                            </div>
 
           {/* Publications */}
           <div className="mt-8" id="publications">
@@ -456,49 +457,88 @@ export default function PortfolioSite() {
             </Section>
           </div>
 
-          {/* Projects with search & tags */}
-          <div className="mt-8" id="projects">
-            <Section id="projects" icon={FlaskConical} title="Academic & Applied Projects">
-              <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
-                <Input placeholder="Search projects…" value={search} onChange={(e) => setSearch(e.target.value)} className="w-full md:max-w-sm" />
-                <div className="flex flex-wrap gap-2">
-                  <Button size="sm" variant={filterTag === "" ? "default" : "outline"} className="rounded-full" onClick={() => setFilterTag("")}>All</Button>
-                  {allTags.map((t) => (
-                    <Button key={t} size="sm" variant={filterTag === t ? "default" : "outline"} className="rounded-full" onClick={() => setFilterTag(t)}>
-                      {t}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredProjects.map((p, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
-                    <Card className="h-full rounded-2xl">
-                      <CardHeader>
-                        <CardTitle className="flex items-center justify-between">
-                          <span>{p.title}</span>
-                          <Badge variant="outline">{p.period}</Badge>
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-slate-600 dark:text-slate-300">{p.description}</p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {p.tags.map((t) => <Tag key={t}>{t}</Tag>)}
-                        </div>
-                        <div className="mt-4 flex flex-wrap gap-3 text-sm">
-                          {p.links?.map((l) => (
-                            <a key={l.label} href={l.href} className="inline-flex items-center gap-2 hover:underline" target="_blank" rel="noreferrer">
-                              <ArrowUpRight className="h-4 w-4" /> {l.label}
-                            </a>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
+        {/* Projects with search & tags */}
+<div className="mt-8" id="projects">
+  <Section id="projects" icon={FlaskConical} title="Academic & Applied Projects">
+    {/* Search + filter */}
+    <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+      <Input
+        placeholder="Search projects…"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full md:max-w-sm"
+      />
+
+      {/* Make chips horizontally scrollable on small screens */}
+      <div className="-mx-1 px-1 overflow-x-auto no-scrollbar">
+        <div className="flex flex-nowrap md:flex-wrap gap-2">
+          <Button
+            size="sm"
+            variant={filterTag === "" ? "default" : "outline"}
+            className="rounded-full"
+            onClick={() => setFilterTag("")}
+          >
+            All
+          </Button>
+
+          {allTags.map((t) => (
+            <Button
+              key={t}
+              size="sm"
+              variant={filterTag === t ? "default" : "outline"}
+              className="rounded-full shrink-0"
+              onClick={() => setFilterTag(t)}
+            >
+              {t}
+            </Button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* Cards grid */}
+    <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {filteredProjects.map((p, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
+        >
+          <Card className="h-full rounded-2xl">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span>{p.title}</span>
+                <Badge variant="outline">{p.period}</Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-slate-600 dark:text-slate-300">{p.description}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {p.tags.map((t) => (
+                  <Tag key={t}>{t}</Tag>
                 ))}
               </div>
-            </Section>
-          </div>
+              <div className="mt-4 flex flex-wrap gap-3 text-sm">
+                {p.links?.map((l) => (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    className="inline-flex items-center gap-2 hover:underline"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <ArrowUpRight className="h-4 w-4" /> {l.label}
+                  </a>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </div>
+  </Section>
+</div>
 
           {/* Project Summaries (detailed tabs) */}
           <div className="mt-8" id="project-summaries">

@@ -303,3 +303,26 @@ button:focus-visible {
 .thesis-card-description {
   min-height: 170px;      /* adjust until the text areas align nicely */
 }
+
+/* --- Layout safety: remove white gutters and mobile bounce --- */
+html, body, #root {
+  height: 100%;
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;      /* Prevent horizontal “white edge” */
+  -webkit-font-smoothing: antialiased; /* crisper text on iOS */
+  -webkit-overflow-scrolling: touch;    /* smooth scroll on iOS */
+}
+
+/* Clip any child that might push width on Safari */
+main {
+  overflow-x: clip;
+}
+
+/* Long inline content won’t stretch layout */
+* {
+  word-break: break-word;
+}
